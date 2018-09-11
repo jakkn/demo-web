@@ -13,5 +13,5 @@
 <button (click)="fetchPension()">Hent pensjon</button>
 <br>
 <div *ngIf="pension$ | async; let pension">
-  <app-my-pension [pension]="pension"></app-my-pension>
+  <app-my-pension [pension]="pension" [age]="this.pensionService.pensionAge$ | async"></app-my-pension>
 </div>

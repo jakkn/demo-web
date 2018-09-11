@@ -5,6 +5,7 @@ import { tap } from "rxjs/operators";
 
 export interface Person {
   firstName: string;
+  middleName: string;
   lastName: string;
 }
 
@@ -28,12 +29,14 @@ export class Pension {
 })
 export class PensionService {
   private _pension$: BehaviorSubject<Pension>;
+  private _pensionAge$: BehaviorSubject<number>;
   constructor(private http: HttpClient) {
     const nobody: Person = {
       firstName: "Mr.",
       lastName: "Nobody"
     };
     this._pension$ = new BehaviorSubject(new Pension(nobody, []));
+    this._pensionAge$ = new BehaviorSubject(67);
   }
 
   public fetchPension() {
@@ -41,6 +44,7 @@ export class PensionService {
     const dummyPensionTable: Pension = {
       person: {
         firstName: "Jakob",
+        middleName: "Bar",
         lastName: "Knutsen"
       },
       pensionPayoutTable: [
@@ -57,11 +61,22 @@ export class PensionService {
     };
 
     return observableOf(dummyPensionTable)
-      .pipe(tap(data => this._pension$.next(data)))
+      .pipe(
+        tap(data => this._pension$.next(data)),
+        tap(() => console.log("I'm tapping!"))
+      )
       .subscribe();
   }
 
   public get pension$(): Observable<Pension> {
     return this._pension$.asObservable();
+  }
+
+  public updatePensionAge(age: number) {
+    this._pensionAge$.next(age);
+  }
+
+  public get pensionAge$(): Observable<number> {
+    return this._pensionAge$.asObservable();
   }
 }

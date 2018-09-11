@@ -11,6 +11,7 @@ export class AppComponent {
   title = "demo-web";
   name: Person = {
     firstName: "Jakob",
+    middleName: "",
     lastName: "Knutsen"
   };
   pension$: Observable<Pension>;

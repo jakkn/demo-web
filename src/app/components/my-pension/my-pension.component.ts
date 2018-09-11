@@ -9,8 +9,16 @@ import { PensionService, Pension } from "../../services/pension.service";
 export class MyPensionComponent implements OnInit {
   @Input()
   pension: Pension;
+  @Input()
+  age: number;
 
-  constructor() {}
+  constructor(private pensionService: PensionService) {}
 
   ngOnInit() {}
+
+  onSlide() {
+    this.pensionService.updatePensionAge(
+      document.getElementsByClassName("slider")[0].value
+    );
+  }
 }
