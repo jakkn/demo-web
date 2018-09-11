@@ -1,0 +1,8 @@
+<p>
+  {{ pension.person.firstName }} {{ pension.person.lastName }}
+</p>
+<p>Din pensjon:</p>
+<div *ngFor="let plan of pension?.pensionPayoutTable">
+  <div>Age: {{plan.age}}</div>
+  <div>Value: {{plan.value}}</div>
+</div>
